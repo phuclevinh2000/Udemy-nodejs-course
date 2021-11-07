@@ -1,10 +1,6 @@
 const chalk = require('chalk')
 const fs = require('fs');
 
-const getNotes = () => {
-  return 'Your notes...';
-};
-
 // Function to add some note
 const addNote =  (title, body) => {
   const notes = loadNotes();        //load notes from notes.json, if that file does not exist yet, then return empty array
@@ -75,7 +71,6 @@ const loadNotes = () => {
 };
 
 module.exports = {
-  getNotes: getNotes,
   addNote: addNote,
   removeNote: removeNote,
   listNote: listNote,
