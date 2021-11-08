@@ -1,10 +1,25 @@
 const request = require('request')
+const geocode = require('./utils/geocode')    //return the lat and long of a location
+const forecast = require('./utils/forecast')  //return the weather data of a location using lat and long
 
-const url = 'http://api.weatherstack.com/current?access_key=e20b6e3cdc4dfac7786b452bf0b08c04&query=37.8267,-122.4233&units=f'
+const address = process.argv[2] //the the input argv
 
-request({ url: url, json: true }, (error, response) =>{   //using request in npm
-  console.log(response.body.current.weather_descriptions[0]+ 'It is currently ' + response.body.current.temperature + " degress out, It feels like " + response.body.current.feelslike)
-})
+if(!address) {
+  console.log('Please provide an address')
+} else {
+  geocode(address, (error, data) => {
+    if(error) {
+      return console.log(error)
+    } 
+    
+    forecast(data.latitude, data.longtitude, (error, forecastData) => {
+      if(error) {
+        return console.log(error)
+      }
+      console.log(data.location)
+      console.log(forecastData)
+    })
+  })
+}
 
-//Geocoding
-//Address -> Lat/Long ->weather
+
